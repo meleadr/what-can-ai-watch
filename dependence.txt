@@ -1,0 +1,29 @@
+ng new nomdelapp --routing --inline-style --package-manager=pnpm --skip-tests --style=scss
+
+- ajouter "changeDetection": "OnPush"
+- ajouter les dépendances suivantes
+
+pnpm add @ngneat/until-destroy
+pnpm add primeng
+pnpm add primeflex
+pnpm add primeicons
+pnpm add font-awesome et configurer le style
+pnpm add @ngx-translate/core et configurer le module
+pnpm add dayjs utils pour les dates
+pnpm add chart.js si besoin
+pnpm add js-cookie pour les cookies
+pnpm add tinymce
+https://blog.bitsrc.io/how-ive-set-up-eslint-and-prettier-in-angular-16-and-why-i-did-that-4bfc304284a6
+https://prettier.io/docs/en/install.html
+pnpm add --save-dev --save-exact prettier
+INSTALLER ESLINT
+npm install --save-dev eslint-config-prettier
+pnpm exec prettier . --write
+"ngx-progressbar": "11.1.0",
+"ngx-security": "3.3.0",
+"ngx-toastr": "17.0.2",
+"ngx-valdemort": "10.0.1",
+
+https://www.npmjs.com/package/nestify-anything
+"primeflex": "3.3.1",
+"primeicons": "6.0.1",
