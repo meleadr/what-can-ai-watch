@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '@env/environment';
 import {
   MovieCategory,
   MovieCategoryResponse,
@@ -18,7 +18,7 @@ export class TmdbService {
 
   private baseURL = 'https://api.themoviedb.org/3';
 
-  public fetchMovieById(id: number): Observable<MovieDetail> {
+  public findById(id: number): Observable<MovieDetail> {
     return this.http.get<MovieDetail>(`${this.baseURL}/movie/${id}`, {
       headers: {
         Authorization: `Bearer ${environment.apiTmdbKey}`,
