@@ -14,6 +14,7 @@ import { TmdbManager } from '@app/shared/managers/tmdb.manager';
   standalone: true,
   imports: [AsyncPipe, ImageModule, NgForOf, CarouselModule],
   templateUrl: './movie.component.html',
+  styleUrls: ['./movie.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieComponent implements OnInit {
