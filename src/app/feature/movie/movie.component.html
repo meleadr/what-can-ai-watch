@@ -1,7 +1,14 @@
 @if (manager.selected$ | async; as movie) {
-  <div class="flex align-items-center p-5 bg-gray-900">
-    <div class="w-3">
+  <div
+    class="flex flex-wrap align-items-center justify-content-center p-5 bg-cover bg-center bg-no-repeat backdrop"
+    [style.background-image]="
+      'url(https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces' +
+      movie.backdrop_path
+    ">
+    <div class="overlay"></div>
+    <div>
       <p-image
+        class="mr-8"
         [src]="
           'https://media.themoviedb.org/t/p/w600_and_h900_bestv2' +
           movie.poster_path
@@ -11,55 +18,65 @@
         [preview]="true" />
     </div>
 
-    <div class="w-9 pl-3">
+    <div class="w-6 pl-3">
       <h1 class="text-primary font-bold">{{ movie.title }}</h1>
 
-      <h2 class="font-bold">Résumé</h2>
-      <p>{{ movie.overview }}</p>
+      <h3 class="font-bold">Date de sortie</h3>
+      <p>{{ movie.release_date | date: 'dd-MM-yyyy' }}</p>
 
-      <h2 class="font-bold">Date de sortie</h2>
-      <p>{{ movie.release_date }}</p>
-
-      <h2 class="font-bold">Notes</h2>
+      <h3 class="font-bold">Notes</h3>
       <p>{{ movie.vote_average }}</p>
 
-      <h2 class="font-bold">Nombres de votes</h2>
+      <h3 class="font-bold">Nombres de votes</h3>
       <p>{{ movie.vote_count }}</p>
 
-      <h2 class="font-bold">Popularité</h2>
-      <p>Popularity: {{ movie.popularity }}</p>
+      <h3 class="font-bold">Synopsis</h3>
+      <p>{{ movie.overview }}</p>
     </div>
   </div>
 
   @if (cast$ | async; as actors) {
-    <p-carousel
-      [value]="actors"
-      [numVisible]="12"
-      [numScroll]="1"
-      [responsiveOptions]="responsiveOptions">
-      <ng-template let-actor pTemplate="item">
-        <div class="border-1 surface-border border-round m-2 p-3">
-          <div class="mb-3">
-            <div class="relative mx-auto">
-              <img
-                [width]="'100'"
-                [src]="
-                  'https://media.themoviedb.org/t/p/w276_and_h350_face' +
-                  actor.profile_path
-                "
-                [alt]="actor.name"
-                class="border-round" />
+    @if (actors.length > 0) {
+      <h2 class="text-primary text-center font-bold">Acteurs</h2>
+
+      <p-carousel
+        [value]="actors"
+        [numVisible]="6"
+        [numScroll]="6"
+        [responsiveOptions]="responsiveOptions">
+        <ng-template let-actor pTemplate="item">
+          <div class="border-1 surface-border border-round m-2 p-3">
+            <div class="mb-3">
+              <div class="relative mx-auto text-center">
+                <img
+                  [width]="'100'"
+                  [src]="
+                    actor.profile_path
+                      ? 'https://media.themoviedb.org/t/p/w276_and_h350_face' +
+                        actor.profile_path
+                      : '../../../assets/images/userNotFound.svg'
+                  "
+                  [alt]="actor.name"
+                  class="border-round" />
+              </div>
             </div>
+            <p class="mb-3 font-medium">
+              {{ actor.name }}
+            </p>
+            <p class="text-sm">
+              {{ actor.character }}
+            </p>
+            <p class="text-xs">
+              {{ actor.known_for_department }}
+            </p>
           </div>
-          <div class="mb-3 font-medium">
-            {{ actor.name }}
-          </div>
-          <div class="text-xs">
-            {{ actor.character }}
-          </div>
-        </div>
-      </ng-template>
-    </p-carousel>
+        </ng-template>
+      </p-carousel>
+    } @else {
+      <h2 class="text-primary text-center font-bold">
+        Aucune distribution des rôles n'est présente pour ce film
+      </h2>
+    }
   } @else {
     <div class="loading">
       <p>Loading...</p>
