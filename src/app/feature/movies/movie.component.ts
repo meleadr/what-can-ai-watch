@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { TmdbService } from '@app/shared/services/tmdb.service';
 import { AsyncPipe, NgForOf } from '@angular/common';
@@ -23,7 +22,6 @@ export class MovieComponent implements OnInit {
 
   constructor(
     public manager: TmdbManager,
-    private route: ActivatedRoute,
     private tmdbService: TmdbService
   ) {}
 
