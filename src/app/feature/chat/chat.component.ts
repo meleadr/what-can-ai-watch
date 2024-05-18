@@ -2,13 +2,16 @@ import {
   AfterViewChecked,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   OnInit,
+  QueryList,
+  ViewChildren,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
-import { TmdbService } from '../../shared/services/tmdb.service';
+import { TmdbService } from '@app/shared/services/tmdb.service';
 import { CommonModule } from '@angular/common';
-import { TmdbManager } from '../../shared/managers/tmdb.manager';
+import { TmdbManager } from '@app/shared/managers/tmdb.manager';
 import { ChatManager } from './managers/chat.manager';
 import { Message } from './model/chat.model';
 import { InputTextModule } from 'primeng/inputtext';
@@ -36,6 +39,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
   providers: [TmdbManager, ChatManager],
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
+  @ViewChildren('messageDiv') private messages!: QueryList<ElementRef>;
   constructor(
     private tmdbService: TmdbService,
     private tmdbManager: TmdbManager,
@@ -44,7 +48,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.tmdbManager.categories$.subscribe(console.log);
-    this.tmdbService.fetchMovieById(2).subscribe(console.log);
+    this.tmdbService.findById(2).subscribe(console.log);
+    this.tmdbService.findById(2).subscribe(console.log);
   }
 
   ngAfterViewChecked(): void {
@@ -52,9 +57,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   private scrollToBottom(): void {
-    const messageContainer = document.querySelector('.message-container');
-    if (messageContainer) {
-      messageContainer.scrollTop = messageContainer.scrollHeight;
+    const lastMessage = this.messages.last;
+
+    if (lastMessage) {
+      lastMessage.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
 

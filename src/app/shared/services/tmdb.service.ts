@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '@env/environment';
 import {
   MovieCategory,
   MovieCategoryResponse,
@@ -8,6 +8,7 @@ import {
   MovieResponse,
 } from '../models/movie.model';
 import { map, Observable } from 'rxjs';
+import { Cast, Credit } from '../models/credit.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class TmdbService {
 
   private baseURL = 'https://api.themoviedb.org/3';
 
-  public fetchMovieById(id: number): Observable<MovieDetail> {
+  public findById(id: number): Observable<MovieDetail> {
     return this.http.get<MovieDetail>(`${this.baseURL}/movie/${id}`, {
       headers: {
         Authorization: `Bearer ${environment.apiTmdbKey}`,
@@ -57,5 +58,18 @@ export class TmdbService {
         },
       })
       .pipe(map(response => response.genres));
+  }
+
+  public fetchCastByIdMovie(id: number): Observable<Cast[]> {
+    return this.http
+      .get<Credit>(`${this.baseURL}/movie/${id}/credits`, {
+        headers: {
+          Authorization: `Bearer ${environment.apiTmdbKey}`,
+        },
+        params: {
+          language: 'fr-FR',
+        },
+      })
+      .pipe(map(credit => credit.cast));
   }
 }
