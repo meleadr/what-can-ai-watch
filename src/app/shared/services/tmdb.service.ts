@@ -8,6 +8,7 @@ import {
   MovieResponse,
 } from '../models/movie.model';
 import { map, Observable } from 'rxjs';
+import { Cast, Credit } from '../models/credit.model';
 
 @Injectable({
   providedIn: 'root',
@@ -57,5 +58,18 @@ export class TmdbService {
         },
       })
       .pipe(map(response => response.genres));
+  }
+
+  public fetchCastByIdMovie(id: number): Observable<Cast[]> {
+    return this.http
+      .get<Credit>(`${this.baseURL}/movie/${id}/credits`, {
+        headers: {
+          Authorization: `Bearer ${environment.apiTmdbKey}`,
+        },
+        params: {
+          language: 'fr-FR',
+        },
+      })
+      .pipe(map(credit => credit.cast));
   }
 }
