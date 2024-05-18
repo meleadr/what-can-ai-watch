@@ -22,5 +22,6 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.tmdbManager.categories$.subscribe(console.log);
+    this.tmdbService.fetchMovieById(2).subscribe(console.log);
   }
 }
