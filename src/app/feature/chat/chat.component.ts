@@ -2,7 +2,10 @@ import {
   AfterViewChecked,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   OnInit,
+  QueryList,
+  ViewChildren,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
@@ -36,6 +39,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
   providers: [TmdbManager, ChatManager],
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
+  @ViewChildren('messageDiv') private messages!: QueryList<ElementRef>;
   constructor(
     private tmdbService: TmdbService,
     private tmdbManager: TmdbManager,
@@ -52,9 +56,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   private scrollToBottom(): void {
-    const messageContainer = document.querySelector('.message-container');
-    if (messageContainer) {
-      messageContainer.scrollTop = messageContainer.scrollHeight;
+    const lastMessage = this.messages.last;
+
+    if (lastMessage) {
+      lastMessage.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
 

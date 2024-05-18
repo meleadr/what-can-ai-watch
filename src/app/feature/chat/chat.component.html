@@ -3,17 +3,19 @@
     class="flex flex-column justify-content-between p-5 border-2 border-dashed surface-border border-round surface-card"
     style="height: 87vh">
     <div class="message-container">
-      <div *ngFor="let message of chatManager.messages$ | async">
-        <div
-          class="flex p-4"
-          [ngClass]="message.sender ? 'justify-content-end' : ''">
-          <p>
-            <strong>{{ message.sender ? 'Me' : 'Bot' }}</strong
-            >: {{ message.content }}
-            <sub class="text-xs">{{ message.timestamp | date: 'h:mm' }}</sub>
-          </p>
+      @for (message of chatManager.messages$ | async; track message) {
+        <div #messageDiv>
+          <div
+            class="flex p-4"
+            [ngClass]="message.sender ? 'justify-content-end' : ''">
+            <p>
+              <strong>{{ message.sender ? 'Me' : 'Bot' }}</strong
+              >: {{ message.content }}
+              <sub class="text-xs">{{ message.timestamp | date: 'h:mm' }}</sub>
+            </p>
+          </div>
         </div>
-      </div>
+      }
     </div>
     <div class="flex justify-content-center">
       <p-inputGroup class="w-30rem">
