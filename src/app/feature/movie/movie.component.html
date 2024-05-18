@@ -1,0 +1,72 @@
+@if (movie$ | async; as movie) {
+  <div class="flex align-items-center p-5 bg-gray-900">
+    <div class="w-3">
+      <p-image
+        [src]="
+          'https://media.themoviedb.org/t/p/w600_and_h900_bestv2' +
+          movie.poster_path
+        "
+        [alt]="movie.title"
+        [width]="'350'"
+        [preview]="true" />
+    </div>
+
+    <div class="w-9 pl-3">
+      <h1 class="text-primary font-bold">{{ movie.title }}</h1>
+
+      <h2 class="font-bold">Résumé</h2>
+      <p>{{ movie.overview }}</p>
+
+      <h2 class="font-bold">Date de sortie</h2>
+      <p>{{ movie.release_date }}</p>
+
+      <h2 class="font-bold">Notes</h2>
+      <p>{{ movie.vote_average }}</p>
+
+      <h2 class="font-bold">Nombres de votes</h2>
+      <p>{{ movie.vote_count }}</p>
+
+      <h2 class="font-bold">Popularité</h2>
+      <p>Popularity: {{ movie.popularity }}</p>
+    </div>
+  </div>
+
+  @if (cast$ | async; as actors) {
+    <p-carousel
+      [value]="actors"
+      [numVisible]="12"
+      [numScroll]="1"
+      [responsiveOptions]="responsiveOptions">
+      <ng-template let-actor pTemplate="item">
+        <div class="border-1 surface-border border-round m-2 p-3">
+          <div class="mb-3">
+            <div class="relative mx-auto">
+              <img
+                [width]="'100'"
+                [src]="
+                  'https://media.themoviedb.org/t/p/w276_and_h350_face' +
+                  actor.profile_path
+                "
+                [alt]="actor.name"
+                class="border-round" />
+            </div>
+          </div>
+          <div class="mb-3 font-medium">
+            {{ actor.name }}
+          </div>
+          <div class="text-xs">
+            {{ actor.character }}
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  } @else {
+    <div class="loading">
+      <p>Loading...</p>
+    </div>
+  }
+} @else {
+  <div class="loading">
+    <p>Loading...</p>
+  </div>
+}

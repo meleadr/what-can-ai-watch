@@ -7,6 +7,11 @@ export const routes: Routes = [
       import('./feature/chat/chat.component').then(m => m.ChatComponent),
   },
   {
+    path: 'movie/:id',
+    loadComponent: () =>
+      import('./feature/movie/movie.component').then(m => m.MovieComponent),
+  },
+  {
     path: '',
     pathMatch: 'full',
     loadComponent: () =>
