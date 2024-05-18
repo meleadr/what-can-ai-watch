@@ -12,4 +12,15 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./landing/landing.component').then(m => m.LandingComponent),
   },
+  {
+    path: 'not-found',
+    loadComponent: () =>
+      import('./shared/components/not-found/not-found.component').then(
+        m => m.NotFoundComponent
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
+  },
 ];
