@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import {
+  Movie,
   MovieCategory,
   MovieCategoryResponse,
   MovieDetail,
@@ -71,5 +72,18 @@ export class TmdbService {
         },
       })
       .pipe(map(credit => credit.cast));
+  }
+
+  public fetchTopRated(): Observable<Movie[]> {
+    return this.http
+      .get<MovieResponse>(`${this.baseURL}/movie/top_rated`, {
+        headers: {
+          Authorization: `Bearer ${environment.apiTmdbKey}`,
+        },
+        params: {
+          language: 'fr-FR',
+        },
+      })
+      .pipe(map(response => response.results));
   }
 }
