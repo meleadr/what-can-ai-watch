@@ -100,4 +100,30 @@ export class TmdbService {
       })
       .pipe(map(response => response.results));
   }
+
+  public fetchPopular(): Observable<Movie[]> {
+    return this.http
+      .get<MovieResponse>(`${this.baseURL}/movie/popular`, {
+        headers: {
+          Authorization: `Bearer ${environment.apiTmdbKey}`,
+        },
+        params: {
+          language: 'fr-FR',
+        },
+      })
+      .pipe(map(response => response.results));
+  }
+
+  public fetchUpcoming(): Observable<Movie[]> {
+    return this.http
+      .get<MovieResponse>(`${this.baseURL}/movie/upcoming`, {
+        headers: {
+          Authorization: `Bearer ${environment.apiTmdbKey}`,
+        },
+        params: {
+          language: 'fr-FR',
+        },
+      })
+      .pipe(map(response => response.results));
+  }
 }

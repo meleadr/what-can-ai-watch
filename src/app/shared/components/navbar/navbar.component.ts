@@ -38,6 +38,17 @@ export class NavbarComponent implements OnInit {
         routerLink: 'movie/top-rated',
       },
       {
+        label: 'Populaires',
+        routerLink: 'movie/popular',
+      },
+      {
+        label: 'Prochaines sorties',
+        routerLink: 'movie/upcoming',
+      },
+      {
+        label: 'A propos',
+      },
+      {
         label: 'Contact',
       },
     ];

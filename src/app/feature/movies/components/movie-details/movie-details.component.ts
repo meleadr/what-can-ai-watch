@@ -6,7 +6,7 @@ import { ImageModule } from 'primeng/image';
 import { CarouselModule } from 'primeng/carousel';
 import { Cast } from '@app/shared/models/credit.model';
 import { CarouselResponsiveOptions } from 'primeng/carousel/carousel.interface';
-import { TmdbManager } from '@app/shared/managers/tmdb.manager';
+import { MovieManager } from '@app/shared/managers/movie-manager.service';
 import { Video } from '@app/shared/models/video';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -22,17 +22,17 @@ import { DialogModule } from 'primeng/dialog';
     ButtonModule,
     DialogModule,
   ],
-  templateUrl: './movie.component.html',
-  styleUrls: ['./movie.component.scss'],
+  templateUrl: './movie-details.component.html',
+  styleUrls: ['./movie-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MovieComponent implements OnInit {
+export class MovieDetailsComponent implements OnInit {
   public cast$: Subject<Cast[]> = new Subject<Cast[]>();
   public responsiveOptions!: CarouselResponsiveOptions[];
   public video$: Subject<Video> = new Subject<Video>();
 
   constructor(
-    public manager: TmdbManager,
+    public manager: MovieManager,
     private tmdbService: TmdbService
   ) {}
 

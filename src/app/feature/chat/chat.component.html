@@ -3,15 +3,21 @@
     class="flex flex-column justify-content-between p-5 border-2 border-dashed surface-border border-round surface-card"
     style="height: 87vh">
     <div class="message-container">
-      @for (message of chatManager.messages$ | async; track message) {
+      @for (
+        message of manager.messagesOpenAi$ | async | filter: OpenAiRole.System;
+        track message
+      ) {
         <div #messageDiv>
           <div
             class="flex p-4"
-            [ngClass]="message.sender ? 'justify-content-end' : ''">
+            [ngClass]="
+              message.role === OpenAiRole.User ? 'justify-content-end' : ''
+            ">
             <p>
-              <strong>{{ message.sender ? 'Me' : 'Bot' }}</strong
+              <strong>{{
+                message.role === OpenAiRole.User ? 'Me' : 'Bot'
+              }}</strong
               >: {{ message.content }}
-              <sub class="text-xs">{{ message.timestamp | date: 'h:mm' }}</sub>
             </p>
           </div>
         </div>
@@ -23,14 +29,13 @@
           type="text"
           pInputText
           placeholder="Message AI assistant"
-          #messageInput
-          (keydown.enter)="
-            sendMessage(messageInput.value); messageInput.value = ''
-          " />
+          [(ngModel)]="inputValue"
+          (keydown.enter)="sendMessage()" />
         <button
           type="button"
           pButton
-          (click)="sendMessage(messageInput.value); messageInput.value = ''"
+          [disabled]="!inputValue || (manager.isLoading$ | async)"
+          (click)="sendMessage()"
           icon="pi pi-send"></button>
       </p-inputGroup>
     </div>
