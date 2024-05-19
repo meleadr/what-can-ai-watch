@@ -46,7 +46,3 @@ export interface MovieCategory {
   id: number;
   name: string;
 }
-
-export interface MovieCategoryResponse {
-  genres: MovieCategory[];
-}
