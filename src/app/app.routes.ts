@@ -12,14 +12,14 @@ import { Observable } from 'rxjs';
 export const movieResolver: ResolveFn<Movie> = (
   route: ActivatedRouteSnapshot,
   _state: RouterStateSnapshot,
-  tmdbManager: TmdbManager = inject(TmdbManager)
-): Observable<Movie> => tmdbManager.load(+route.paramMap.get('id'));
+  manager: TmdbManager = inject(TmdbManager)
+): Observable<Movie> => manager.load(+route.paramMap.get('id'));
 
 export const topMovieResolver: ResolveFn<Movie[]> = (
   _route: ActivatedRouteSnapshot,
   _state: RouterStateSnapshot,
-  tmdbManager: TmdbManager = inject(TmdbManager)
-): Observable<Movie[]> => tmdbManager.loadTopRated();
+  manager: TmdbManager = inject(TmdbManager)
+): Observable<Movie[]> => manager.loadTopRated();
 
 export const routes: Routes = [
   {

@@ -1,22 +1,34 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Message } from '../model/chat.model';
-import { ChatService } from '../services/chat.service';
+import { OpenAiMessage, OpenAiRole } from '../model/chat.model';
+import { OpenAiService } from '../services/open-ai.service';
 
 @Injectable()
 export class ChatManager {
-  public messages$: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>(
-    []
-  );
-  constructor(private chatService: ChatService) {}
+  public messagesOpenAi$: BehaviorSubject<OpenAiMessage[]> =
+    new BehaviorSubject<OpenAiMessage[]>([
+      {
+        role: OpenAiRole.System,
+        content: 'Vous êtes un assistant AI.',
+      },
+    ]);
+  constructor(private service: OpenAiService) {}
 
-  public addMessage(message: Message): void {
+  public addMessage(message: OpenAiMessage): void {
     if (!message.content) return;
-    const responseMessage = {
-      content: 'I am a bot',
-      sender: false,
-      timestamp: new Date(),
-    };
-    this.messages$.next([...this.messages$.value, message, responseMessage]);
+    this.addOpenAiMessage(message);
+
+    this.service
+      .generateResponse(this.messagesOpenAi$.value)
+      .subscribe(response => {
+        this.addOpenAiMessage({
+          role: OpenAiRole.Assistant,
+          content: response.choices[0].message.content,
+        });
+      });
+  }
+
+  private addOpenAiMessage(message: OpenAiMessage): void {
+    this.messagesOpenAi$.next([...this.messagesOpenAi$.value, message]);
   }
 }

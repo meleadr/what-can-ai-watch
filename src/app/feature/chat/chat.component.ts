@@ -13,7 +13,7 @@ import { TmdbService } from '@app/shared/services/tmdb.service';
 import { CommonModule } from '@angular/common';
 import { TmdbManager } from '@app/shared/managers/tmdb.manager';
 import { ChatManager } from './managers/chat.manager';
-import { Message } from './model/chat.model';
+import { OpenAiMessage, OpenAiRole } from './model/chat.model';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupModule } from 'primeng/inputgroup';
 
@@ -65,12 +65,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   sendMessage(content: string): void {
-    const message: Message = {
+    const message: OpenAiMessage = {
       content,
-      sender: true,
-      timestamp: new Date(),
+      role: OpenAiRole.User,
     };
 
     this.chatManager.addMessage(message);
   }
+
+  protected readonly OpenAiRole = OpenAiRole;
 }
