@@ -22,11 +22,11 @@ import { DialogModule } from 'primeng/dialog';
     ButtonModule,
     DialogModule,
   ],
-  templateUrl: './movie.component.html',
-  styleUrls: ['./movie.component.scss'],
+  templateUrl: './movie-details.component.html',
+  styleUrls: ['./movie-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MovieComponent implements OnInit {
+export class MovieDetailsComponent implements OnInit {
   public cast$: Subject<Cast[]> = new Subject<Cast[]>();
   public responsiveOptions!: CarouselResponsiveOptions[];
   public video$: Subject<Video> = new Subject<Video>();

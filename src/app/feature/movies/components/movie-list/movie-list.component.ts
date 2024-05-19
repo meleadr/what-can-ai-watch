@@ -7,9 +7,9 @@ import { AsyncPipe } from '@angular/common';
   selector: 'app-top-movies',
   standalone: true,
   imports: [MovieCardComponent, AsyncPipe],
-  templateUrl: './top-movies.component.html',
+  templateUrl: './movie-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TopMoviesComponent {
+export class MovieListComponent {
   public manager = inject(MovieManager);
 }

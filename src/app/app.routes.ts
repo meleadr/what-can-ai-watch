@@ -32,8 +32,8 @@ export const routes: Routes = [
     pathMatch: 'full',
     loadComponent: () =>
       import(
-        '@app/feature/movies/components/top-movies/top-movies.component'
-      ).then(m => m.TopMoviesComponent),
+        '@app/feature/movies/components/movie-list/movie-list.component'
+      ).then(m => m.MovieListComponent),
     providers: [MovieManager],
     resolve: { movies: topMovieResolver },
   },
