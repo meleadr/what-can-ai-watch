@@ -10,6 +10,7 @@ import {
 } from '../models/movie.model';
 import { map, Observable } from 'rxjs';
 import { Cast, Credit } from '../models/credit.model';
+import { Video, VideoResponse } from '@app/shared/models/video';
 
 @Injectable({
   providedIn: 'root',
@@ -72,6 +73,19 @@ export class TmdbService {
         },
       })
       .pipe(map(credit => credit.cast));
+  }
+
+  public fetchVideoByIdMovie(id: number): Observable<Video> {
+    return this.http
+      .get<VideoResponse>(`${this.baseURL}/movie/${id}/videos`, {
+        headers: {
+          Authorization: `Bearer ${environment.apiTmdbKey}`,
+        },
+        params: {
+          language: 'fr-FR',
+        },
+      })
+      .pipe(map(response => response.results[0]));
   }
 
   public fetchTopRated(): Observable<Movie[]> {
