@@ -27,6 +27,12 @@ export class MovieManager {
       .pipe(tap(value => this._list.next(value)));
   }
 
+  public loadUpcoming(): Observable<Movie[]> {
+    return this.service
+      .fetchUpcoming()
+      .pipe(tap(value => this._list.next(value)));
+  }
+
   public load(id: number): Observable<Movie> {
     return this.service.findById(id).pipe(tap(value => this.select(value)));
   }

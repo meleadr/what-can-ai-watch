@@ -27,14 +27,15 @@ export const popularMovieResolver: ResolveFn<Movie[]> = (
   manager: MovieManager = inject(MovieManager)
 ): Observable<Movie[]> => manager.loadPopular();
 
-export const routes: Routes = [
+export const upcomingMovieResolver: ResolveFn<Movie[]> = (
+  _route: ActivatedRouteSnapshot,
+  _state: RouterStateSnapshot,
+  manager: MovieManager = inject(MovieManager)
+): Observable<Movie[]> => manager.loadUpcoming();
+
+export const movieRoutes: Routes = [
   {
-    path: 'chat',
-    loadComponent: () =>
-      import('./feature/chat/chat.component').then(m => m.ChatComponent),
-  },
-  {
-    path: 'movie/top-rated',
+    path: 'top-rated',
     pathMatch: 'full',
     loadComponent: () =>
       import(
@@ -42,9 +43,10 @@ export const routes: Routes = [
       ).then(m => m.MovieListComponent),
     providers: [MovieManager],
     resolve: { movies: topMovieResolver },
+    data: { title: 'Les mieux notés' },
   },
   {
-    path: 'movie/popular',
+    path: 'popular',
     pathMatch: 'full',
     loadComponent: () =>
       import(
@@ -52,15 +54,39 @@ export const routes: Routes = [
       ).then(m => m.MovieListComponent),
     providers: [MovieManager],
     resolve: { movies: popularMovieResolver },
+    data: { title: 'Les plus populaires' },
   },
   {
-    path: 'movie/:id',
+    path: 'upcoming',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import(
+        '@app/feature/movies/components/movie-list/movie-list.component'
+      ).then(m => m.MovieListComponent),
+    providers: [MovieManager],
+    resolve: { movies: upcomingMovieResolver },
+    data: { title: 'Les prochaines sorties' },
+  },
+  {
+    path: ':id',
     loadComponent: () =>
       import(
         '@app/feature/movies/components/movie-details/movie-details.component'
       ).then(m => m.MovieDetailsComponent),
     providers: [MovieManager],
     resolve: { movie: movieResolver },
+  },
+];
+
+export const routes: Routes = [
+  {
+    path: 'chat',
+    loadComponent: () =>
+      import('./feature/chat/chat.component').then(m => m.ChatComponent),
+  },
+  {
+    path: 'movie',
+    children: movieRoutes,
   },
   {
     path: '',

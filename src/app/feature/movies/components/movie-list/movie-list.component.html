@@ -1,4 +1,4 @@
-<h1 class="text-primary text-center font-bold m-3">Top movies</h1>
+<h1 class="text-primary text-center font-bold m-3">{{ title$ | async }}</h1>
 <div class="flex flex-wrap justify-content-around gap-3 mx-3">
   @for (movie of manager.list$ | async; track movie) {
     <app-movie-card [movie]="movie" />

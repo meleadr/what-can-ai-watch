@@ -42,6 +42,10 @@ export class NavbarComponent implements OnInit {
         routerLink: 'movie/popular',
       },
       {
+        label: 'Prochaines sorties',
+        routerLink: 'movie/upcoming',
+      },
+      {
         label: 'A propos',
       },
       {
