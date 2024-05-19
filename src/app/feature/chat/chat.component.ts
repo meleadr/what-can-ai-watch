@@ -15,6 +15,7 @@ import { OpenAiMessage, OpenAiRole } from './model/chat.model';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { FormsModule } from '@angular/forms';
+import { FilterPipe } from '@app/shared/pipes/filter.pipe';
 
 @Component({
   selector: 'app-chat',
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     RouterLink,
     InputTextModule,
     InputGroupModule,
+    FilterPipe,
     FormsModule,
   ],
   styles: [

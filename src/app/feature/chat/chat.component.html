@@ -3,7 +3,10 @@
     class="flex flex-column justify-content-between p-5 border-2 border-dashed surface-border border-round surface-card"
     style="height: 87vh">
     <div class="message-container">
-      @for (message of manager.messagesOpenAi$ | async; track message) {
+      @for (
+        message of manager.messagesOpenAi$ | async | filter: OpenAiRole.System;
+        track message
+      ) {
         <div #messageDiv>
           <div
             class="flex p-4"
