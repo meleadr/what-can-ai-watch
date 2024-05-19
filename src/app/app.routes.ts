@@ -21,6 +21,12 @@ export const topMovieResolver: ResolveFn<Movie[]> = (
   manager: MovieManager = inject(MovieManager)
 ): Observable<Movie[]> => manager.loadTopRated();
 
+export const popularMovieResolver: ResolveFn<Movie[]> = (
+  _route: ActivatedRouteSnapshot,
+  _state: RouterStateSnapshot,
+  manager: MovieManager = inject(MovieManager)
+): Observable<Movie[]> => manager.loadPopular();
+
 export const routes: Routes = [
   {
     path: 'chat',
@@ -36,6 +42,16 @@ export const routes: Routes = [
       ).then(m => m.MovieListComponent),
     providers: [MovieManager],
     resolve: { movies: topMovieResolver },
+  },
+  {
+    path: 'movie/popular',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import(
+        '@app/feature/movies/components/movie-list/movie-list.component'
+      ).then(m => m.MovieListComponent),
+    providers: [MovieManager],
+    resolve: { movies: popularMovieResolver },
   },
   {
     path: 'movie/:id',

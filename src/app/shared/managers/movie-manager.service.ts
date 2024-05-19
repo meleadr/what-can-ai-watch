@@ -21,6 +21,12 @@ export class MovieManager {
       .pipe(tap(value => this._list.next(value)));
   }
 
+  public loadPopular(): Observable<Movie[]> {
+    return this.service
+      .fetchPopular()
+      .pipe(tap(value => this._list.next(value)));
+  }
+
   public load(id: number): Observable<Movie> {
     return this.service.findById(id).pipe(tap(value => this.select(value)));
   }
