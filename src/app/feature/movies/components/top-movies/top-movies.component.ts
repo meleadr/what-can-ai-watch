@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MovieCardComponent } from '@app/feature/movies/components/movie-card/movie-card.component';
-import { TmdbManager } from '@app/shared/managers/tmdb.manager';
+import { MovieManager } from '@app/shared/managers/movie-manager.service';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -11,5 +11,5 @@ import { AsyncPipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopMoviesComponent {
-  public manager = inject(TmdbManager);
+  public manager = inject(MovieManager);
 }

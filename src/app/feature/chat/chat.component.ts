@@ -3,15 +3,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  OnInit,
+  inject,
   QueryList,
   ViewChildren,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
-import { TmdbService } from '@app/shared/services/tmdb.service';
 import { CommonModule } from '@angular/common';
-import { TmdbManager } from '@app/shared/managers/tmdb.manager';
 import { ChatManager } from './managers/chat.manager';
 import { OpenAiMessage, OpenAiRole } from './model/chat.model';
 import { InputTextModule } from 'primeng/inputtext';
@@ -36,21 +34,12 @@ import { InputGroupModule } from 'primeng/inputgroup';
   ],
   templateUrl: './chat.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TmdbManager, ChatManager],
+  providers: [ChatManager],
 })
-export class ChatComponent implements OnInit, AfterViewChecked {
+export class ChatComponent implements AfterViewChecked {
   @ViewChildren('messageDiv') private messages!: QueryList<ElementRef>;
-  constructor(
-    private tmdbService: TmdbService,
-    private tmdbManager: TmdbManager,
-    public chatManager: ChatManager
-  ) {}
 
-  ngOnInit(): void {
-    this.tmdbManager.categories$.subscribe(console.log);
-    this.tmdbService.findById(2).subscribe(console.log);
-    this.tmdbService.findById(2).subscribe(console.log);
-  }
+  public manager = inject(ChatManager);
 
   ngAfterViewChecked(): void {
     this.scrollToBottom();
@@ -70,7 +59,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       role: OpenAiRole.User,
     };
 
-    this.chatManager.addMessage(message);
+    this.manager.addMessage(message);
   }
 
   protected readonly OpenAiRole = OpenAiRole;

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Movie, MovieCategory } from '../models/movie.model';
+import { Movie } from '../models/movie.model';
 import { TmdbService } from '../services/tmdb.service';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable()
-export class TmdbManager {
-  public categories$: Subject<MovieCategory[]> = new Subject();
+export class MovieManager {
   protected readonly _selected: BehaviorSubject<Movie | null> =
     new BehaviorSubject<Movie | null>(null);
   readonly selected$: Observable<Movie | null> = this._selected.asObservable();
@@ -14,11 +13,7 @@ export class TmdbManager {
     new BehaviorSubject<Movie[] | null>(null);
   readonly list$: Observable<Movie[] | null> = this._list.asObservable();
 
-  constructor(private service: TmdbService) {
-    this.service
-      .fetchAllCategories()
-      .subscribe(categories => this.categories$.next(categories));
-  }
+  constructor(private service: TmdbService) {}
 
   public loadTopRated(): Observable<Movie[]> {
     return this.service
