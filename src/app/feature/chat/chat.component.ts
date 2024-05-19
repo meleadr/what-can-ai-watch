@@ -14,6 +14,7 @@ import { ChatManager } from './managers/chat.manager';
 import { OpenAiMessage, OpenAiRole } from './model/chat.model';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupModule } from 'primeng/inputgroup';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
@@ -24,6 +25,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
     RouterLink,
     InputTextModule,
     InputGroupModule,
+    FormsModule,
   ],
   styles: [
     `
@@ -40,6 +42,8 @@ export class ChatComponent implements AfterViewChecked {
   @ViewChildren('messageDiv') private messages!: QueryList<ElementRef>;
 
   public manager = inject(ChatManager);
+  public inputValue: string;
+  protected readonly OpenAiRole = OpenAiRole;
 
   ngAfterViewChecked(): void {
     this.scrollToBottom();
@@ -53,14 +57,17 @@ export class ChatComponent implements AfterViewChecked {
     }
   }
 
-  sendMessage(content: string): void {
+  sendMessage(): void {
+    if (this.inputValue === '') return;
+
     const message: OpenAiMessage = {
-      content,
+      content: this.inputValue,
       role: OpenAiRole.User,
     };
 
-    this.manager.addMessage(message);
+    const isAdded = this.manager.addMessage(message);
+    if (isAdded) {
+      this.inputValue = '';
+    }
   }
-
-  protected readonly OpenAiRole = OpenAiRole;
 }

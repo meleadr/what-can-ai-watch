@@ -26,14 +26,13 @@
           type="text"
           pInputText
           placeholder="Message AI assistant"
-          #messageInput
-          (keydown.enter)="
-            sendMessage(messageInput.value); messageInput.value = ''
-          " />
+          [(ngModel)]="inputValue"
+          (keydown.enter)="sendMessage()" />
         <button
           type="button"
           pButton
-          (click)="sendMessage(messageInput.value); messageInput.value = ''"
+          [disabled]="!inputValue || (manager.isLoading$ | async)"
+          (click)="sendMessage()"
           icon="pi pi-send"></button>
       </p-inputGroup>
     </div>
