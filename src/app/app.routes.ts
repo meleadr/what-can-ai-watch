@@ -40,7 +40,9 @@ export const routes: Routes = [
   {
     path: 'movie/:id',
     loadComponent: () =>
-      import('@app/feature/movies/movie.component').then(m => m.MovieComponent),
+      import(
+        '@app/feature/movies/components/movie-details/movie-details.component'
+      ).then(m => m.MovieDetailsComponent),
     providers: [MovieManager],
     resolve: { movie: movieResolver },
   },
