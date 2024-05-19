@@ -15,6 +15,12 @@ export const movieResolver: ResolveFn<Movie> = (
   tmdbManager: TmdbManager = inject(TmdbManager)
 ): Observable<Movie> => tmdbManager.load(+route.paramMap.get('id'));
 
+export const topMovieResolver: ResolveFn<Movie[]> = (
+  _route: ActivatedRouteSnapshot,
+  _state: RouterStateSnapshot,
+  tmdbManager: TmdbManager = inject(TmdbManager)
+): Observable<Movie[]> => tmdbManager.loadTopRated();
+
 export const routes: Routes = [
   {
     path: 'chat',
@@ -22,9 +28,19 @@ export const routes: Routes = [
       import('./feature/chat/chat.component').then(m => m.ChatComponent),
   },
   {
+    path: 'movie/top-rated',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import(
+        '@app/feature/movies/components/top-movies/top-movies.component'
+      ).then(m => m.TopMoviesComponent),
+    providers: [TmdbManager],
+    resolve: { movies: topMovieResolver },
+  },
+  {
     path: 'movie/:id',
     loadComponent: () =>
-      import('./feature/movie/movie.component').then(m => m.MovieComponent),
+      import('@app/feature/movies/movie.component').then(m => m.MovieComponent),
     providers: [TmdbManager],
     resolve: { movie: movieResolver },
   },

@@ -35,6 +35,7 @@ export class NavbarComponent implements OnInit {
       },
       {
         label: 'Top films',
+        routerLink: 'movie/top-rated',
       },
       {
         label: 'Contact',
