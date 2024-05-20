@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node -r dotenv/config mynode.js && ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -29,6 +29,7 @@
     "@ngx-translate/core": "^15.0.0",
     "chart.js": "^4.4.2",
     "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5",
     "font-awesome": "^4.7.0",
     "js-cookie": "^3.0.5",
     "ngx-progressbar": "^11.1.0",
