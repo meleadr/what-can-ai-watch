@@ -2,19 +2,20 @@
   [routerLink]="['/movie', movie().id]"
   style="text-decoration: none; color: inherit">
   <div
-    class="flex justify-content-around card border-2 border surface-border border-round surface-card w-25rem px-5"
+    class="flex justify-content-around card border-2 border surface-border border-round surface-card pr-5"
     style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 10px">
     <div class="flex justify-content-center">
-      <p-image
+      <img
         [src]="
           'https://media.themoviedb.org/t/p/w600_and_h900_bestv2' +
           movie().poster_path
         "
         [alt]="movie().title"
-        [width]="'150'"
-        [preview]="false" />
+        [width]="'150'" />
     </div>
-    <div class="flex flex-column justify-content-around" style="padding: 10px">
+    <div
+      class="flex flex-column justify-content-around ml-3"
+      style="padding: 10px">
       <h3 class="text-primary">
         {{ movie().title }}
       </h3>
