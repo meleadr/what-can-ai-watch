@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { MovieCardComponent } from '@app/feature/movies/components/movie-card/movie-card.component';
-import { MovieManager } from '@app/shared/managers/movie-manager.service';
+import { MovieManager } from '@app/shared/managers/movie.manager';
 import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';

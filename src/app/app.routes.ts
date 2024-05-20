@@ -1,11 +1,16 @@
 import { Routes } from '@angular/router';
-import { MovieManager } from '@app/shared/managers/movie-manager.service';
 import {
   movieResolver,
   popularMovieResolver,
+  popularSeriesResolver,
+  seriesResolver,
   topMovieResolver,
+  topSeriesResolver,
   upcomingMovieResolver,
+  upcomingSeriesResolver,
 } from '@app/resolver.constant';
+import { SeriesManager } from './shared/managers/series.manager';
+import { MovieManager } from '@app/shared/managers/movie.manager';
 
 export const movieRoutes: Routes = [
   {
@@ -52,6 +57,51 @@ export const movieRoutes: Routes = [
   },
 ];
 
+export const seriesRoutes: Routes = [
+  {
+    path: 'top-rated',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import(
+        '@app/feature/series/components/series-list/series-list.component'
+      ).then(m => m.SeriesListComponent),
+    providers: [SeriesManager],
+    resolve: { series: topSeriesResolver },
+    data: { title: 'Les mieux notés' },
+  },
+  {
+    path: 'popular',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import(
+        '@app/feature/series/components/series-list/series-list.component'
+      ).then(m => m.SeriesListComponent),
+    providers: [SeriesManager],
+    resolve: { series: popularSeriesResolver },
+    data: { title: 'Les plus populaires' },
+  },
+  {
+    path: 'upcoming',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import(
+        '@app/feature/series/components/series-list/series-list.component'
+      ).then(m => m.SeriesListComponent),
+    providers: [SeriesManager],
+    resolve: { series: upcomingSeriesResolver },
+    data: { title: 'Les prochaines sorties' },
+  },
+  {
+    path: ':id',
+    loadComponent: () =>
+      import(
+        '@app/feature/series/components/series-details/series-details.component'
+      ).then(m => m.SeriesDetailsComponent),
+    providers: [SeriesManager],
+    resolve: { movie: seriesResolver },
+  },
+];
+
 export const routes: Routes = [
   {
     path: 'chat',
@@ -61,6 +111,10 @@ export const routes: Routes = [
   {
     path: 'movie',
     children: movieRoutes,
+  },
+  {
+    path: 'series',
+    children: seriesRoutes,
   },
   {
     path: '',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Movie } from '../models/movie.model';
-import { TmdbService } from '../services/tmdb.service';
+import { MovieService } from '../services/movie.service';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class MovieManager {
     new BehaviorSubject<Movie[] | null>(null);
   readonly list$: Observable<Movie[] | null> = this._list.asObservable();
 
-  constructor(private service: TmdbService) {}
+  constructor(private service: MovieService) {}
 
   public loadTopRated(): Observable<Movie[]> {
     return this.service

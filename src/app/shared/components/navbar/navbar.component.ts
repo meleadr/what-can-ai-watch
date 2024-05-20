@@ -63,17 +63,17 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Top séries',
             icon: 'pi pi-fw pi-star',
-            routerLink: 'movie/top-rated',
+            routerLink: 'series/top-rated',
           },
           {
             label: 'Populaires',
             icon: 'pi pi-fw pi-thumbs-up',
-            routerLink: 'movie/popular',
+            routerLink: 'series/popular',
           },
           {
             label: 'Prochaines sorties',
             icon: 'pi pi-fw pi-calendar',
-            routerLink: 'movie/upcoming',
+            routerLink: 'series/upcoming',
           },
         ],
       },

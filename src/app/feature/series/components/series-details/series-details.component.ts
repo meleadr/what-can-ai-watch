@@ -1,39 +1,39 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { map, Subject, take } from 'rxjs';
-import { MovieService } from '@app/shared/services/movie.service';
-import { AsyncPipe, NgForOf } from '@angular/common';
-import { ImageModule } from 'primeng/image';
-import { CarouselModule } from 'primeng/carousel';
 import { Cast } from '@app/shared/models/credit.model';
 import { CarouselResponsiveOptions } from 'primeng/carousel/carousel.interface';
 import { Video } from '@app/shared/models/video.model';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { MovieManager } from '@app/shared/managers/movie.manager';
+import { CarouselModule } from 'primeng/carousel';
+import { ImageModule } from 'primeng/image';
+import { SharedModule } from 'primeng/api';
+import { SeriesManager } from '@app/shared/managers/series.manager';
+import { SeriesService } from '@app/shared/services/series.service';
 
 @Component({
-  selector: 'app-movie',
+  selector: 'app-series-details',
   standalone: true,
   imports: [
     AsyncPipe,
-    ImageModule,
-    NgForOf,
-    CarouselModule,
     ButtonModule,
-    DialogModule,
+    CarouselModule,
+    DatePipe,
+    ImageModule,
+    SharedModule,
   ],
-  templateUrl: './movie-details.component.html',
-  styleUrls: ['./movie-details.component.scss'],
+  templateUrl: './series-details.component.html',
+  styleUrl: './series-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MovieDetailsComponent implements OnInit {
+export class SeriesDetailsComponent implements OnInit {
   public cast$: Subject<Cast[]> = new Subject<Cast[]>();
   public responsiveOptions!: CarouselResponsiveOptions[];
   public video$: Subject<Video> = new Subject<Video>();
 
   constructor(
-    public manager: MovieManager,
-    private service: MovieService
+    public manager: SeriesManager,
+    private service: SeriesService
   ) {}
 
   ngOnInit(): void {
