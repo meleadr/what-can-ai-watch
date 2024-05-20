@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
-import {
-  Movie,
-  MovieCategory,
-  MovieCategoryResponse,
-  MovieDetail,
-  MovieResponse,
-} from '../models/movie.model';
+import { Movie, MovieDetail, MovieResponse } from '../models/movie.model';
 import { map, Observable } from 'rxjs';
 import { Cast, Credit } from '../models/credit.model';
 import { Video, VideoResponse } from '@app/shared/models/video';
@@ -47,19 +41,6 @@ export class TmdbService {
         },
       }
     );
-  }
-
-  public fetchAllCategories(): Observable<MovieCategory[]> {
-    return this.http
-      .get<MovieCategoryResponse>(`${this.baseURL}/genre/movie/list`, {
-        headers: {
-          Authorization: `Bearer ${environment.apiTmdbKey}`,
-        },
-        params: {
-          language: 'fr-FR',
-        },
-      })
-      .pipe(map(response => response.genres));
   }
 
   public fetchCastByIdMovie(id: number): Observable<Cast[]> {
@@ -125,5 +106,19 @@ export class TmdbService {
         },
       })
       .pipe(map(response => response.results));
+  }
+
+  public searchMovieByQuery(query: string): Observable<Movie> {
+    return this.http
+      .get<MovieResponse>(`${this.baseURL}/search/movie`, {
+        headers: {
+          Authorization: `Bearer ${environment.apiTmdbKey}`,
+        },
+        params: {
+          language: 'fr-FR',
+          query,
+        },
+      })
+      .pipe(map(response => response.results[0]));
   }
 }
