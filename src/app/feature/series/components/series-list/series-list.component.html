@@ -1,0 +1,6 @@
+<h1 class="text-primary text-center font-bold m-3">{{ title$ | async }}</h1>
+<div class="flex flex-wrap justify-content-around gap-3 mx-3">
+  @for (series of manager.list$ | async; track series) {
+    <app-series-card [series]="series" />
+  }
+</div>

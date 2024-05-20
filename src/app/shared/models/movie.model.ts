@@ -1,3 +1,7 @@
+import { SpokenLanguage } from '@app/shared/models/spoken-language.model';
+import { ProductionCompany } from '@app/shared/models/production.model';
+import { Genre } from '@app/shared/models/genre.model';
+
 export interface Movie {
   id: number;
   adult: boolean;
@@ -15,8 +19,8 @@ export interface Movie {
   vote_count: number;
 }
 
-export interface MovieDetail extends Movie {
-  genres: MovieCategory[];
+export interface MovieDetails extends Movie {
+  genres: Genre[];
   origin_country: string[];
   production_companies: ProductionCompany[];
   spoken_languages: SpokenLanguage[];
@@ -27,22 +31,4 @@ export interface MovieResponse {
   results: Movie[];
   total_pages: number;
   total_results: number;
-}
-
-export interface SpokenLanguage {
-  english_name: string;
-  iso_639_1: string;
-  name: string;
-}
-
-export interface ProductionCompany {
-  id: number;
-  logo_path: string;
-  name: string;
-  origin_country: string;
-}
-
-export interface MovieCategory {
-  id: number;
-  name: string;
 }

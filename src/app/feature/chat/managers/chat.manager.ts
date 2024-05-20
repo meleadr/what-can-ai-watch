@@ -4,7 +4,7 @@ import { OpenAiMessage, OpenAiRole } from '../model/chat.model';
 import { OpenAiService } from '../services/open-ai.service';
 import { MOVIE_HELPER_PROMPT } from '@app/shared/constants/prompt.constant';
 import { Movie } from '@app/shared/models/movie.model';
-import { TmdbService } from '@app/shared/services/tmdb.service';
+import { MovieService } from '@app/shared/services/movie.service';
 
 @Injectable()
 export class ChatManager {
@@ -27,7 +27,7 @@ export class ChatManager {
 
   constructor(
     private service: OpenAiService,
-    private tmdbService: TmdbService
+    private tmdbService: MovieService
   ) {}
 
   public addMessage(message: OpenAiMessage): boolean {
@@ -41,9 +41,7 @@ export class ChatManager {
         finalize(() => this.isLoading.next(false)),
         tap(response => this.addOpenAiMessage(response)),
         filter(response => response.title !== null),
-        switchMap(response =>
-          this.tmdbService.searchMovieByQuery(response.title)
-        ),
+        switchMap(response => this.tmdbService.searchByQuery(response.title)),
         tap(movie => this.movieProposition.next(movie))
       )
       .subscribe();

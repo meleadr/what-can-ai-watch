@@ -1,0 +1,20 @@
+<div class="card flex justify-content-center cursor-pointer">
+  <p-card
+    [header]="series().name"
+    [subheader]="series().vote_average / 10 | percent"
+    [style]="{ width: '300px' }"
+    [routerLink]="['/series', series().id]">
+    <ng-template pTemplate="header">
+      <img
+        [alt]="series().name"
+        [src]="
+          'https://media.themoviedb.org/t/p/w600_and_h900_bestv2' +
+          series().poster_path
+        "
+        [width]="'10000'" />
+    </ng-template>
+    <sub class="flex justify-content-end">{{
+      series().first_air_date | date: 'dd-MM-yyyy'
+    }}</sub>
+  </p-card>
+</div>
