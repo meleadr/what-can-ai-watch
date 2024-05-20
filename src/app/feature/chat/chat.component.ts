@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   inject,
+  OnInit,
   QueryList,
   ViewChildren,
 } from '@angular/core';
@@ -16,6 +17,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '@app/shared/pipes/filter.pipe';
+import { ImageModule } from 'primeng/image';
+import { SmallCardComponent } from '@app/feature/chat/components/small-card/small-card.component';
 
 @Component({
   selector: 'app-chat',
@@ -28,6 +31,8 @@ import { FilterPipe } from '@app/shared/pipes/filter.pipe';
     InputGroupModule,
     FilterPipe,
     FormsModule,
+    ImageModule,
+    SmallCardComponent,
   ],
   styles: [
     `
@@ -40,12 +45,33 @@ import { FilterPipe } from '@app/shared/pipes/filter.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ChatManager],
 })
-export class ChatComponent implements AfterViewChecked {
+export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChildren('messageDiv') private messages!: QueryList<ElementRef>;
 
   public manager = inject(ChatManager);
   public inputValue: string;
   protected readonly OpenAiRole = OpenAiRole;
+
+  ngOnInit(): void {
+    console.log('ChatComponent');
+    // this.manager.movieProposition.next({
+    //   adult: false,
+    //   backdrop_path: '/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg',
+    //   id: 278,
+    //   original_language: 'en',
+    //   genre_ids: [],
+    //   original_title: 'The Shawshank Redemption',
+    //   overview:
+    //     "En 1947, Andy Dufresne, un jeune banquier, est condamné à la prison à vie pour le meurtre de sa femme et de son amant. Ayant beau clamer son innocence, il est emprisonné à Shawshank, le pénitencier le plus sévère de l'État du Maine. Il y fait la rencontre de Red, un noir désabusé, détenu depuis vingt ans. Commence alors une grande histoire d'amitié entre les deux hommes…",
+    //   popularity: 162.204,
+    //   poster_path: '/t30GjttOdb5At1sYy8b3TOwFgWV.jpg',
+    //   release_date: '1994-09-23',
+    //   title: 'Les Évadés',
+    //   video: false,
+    //   vote_average: 8.705,
+    //   vote_count: 26178,
+    // });
+  }
 
   ngAfterViewChecked(): void {
     this.scrollToBottom();
