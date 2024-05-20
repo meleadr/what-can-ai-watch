@@ -9,7 +9,7 @@ export interface OpenAiCompletion {
 
 export interface OpenAiChoice {
   index: number;
-  message: OpenAiMessage;
+  message: OpenAiMessageResponse;
   logprobs: string;
   finish_reason: string;
 }
@@ -17,6 +17,17 @@ export interface OpenAiChoice {
 export interface OpenAiMessage {
   role: string;
   content: string;
+  title?: string;
+}
+
+export interface OpenAiMessageResponse {
+  role: string;
+  content: string;
+}
+
+export interface OpenAiMessageContent {
+  title: string;
+  text: string;
 }
 
 export enum OpenAiRole {

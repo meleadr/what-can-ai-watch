@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize } from 'rxjs';
 import { OpenAiMessage, OpenAiRole } from '../model/chat.model';
 import { OpenAiService } from '../services/open-ai.service';
+import { MOVIE_HELPER_PROMPT } from '@app/shared/constants/prompt.constant';
 
 @Injectable()
 export class ChatManager {
@@ -9,7 +10,7 @@ export class ChatManager {
     new BehaviorSubject<OpenAiMessage[]>([
       {
         role: OpenAiRole.System,
-        content: 'Vous êtes un assistant AI.',
+        content: MOVIE_HELPER_PROMPT,
       },
     ]);
 
@@ -30,10 +31,7 @@ export class ChatManager {
       .generateResponse(this.messagesOpenAi$.value)
       .pipe(finalize(() => this.isLoading.next(false)))
       .subscribe(response => {
-        this.addOpenAiMessage({
-          role: OpenAiRole.Assistant,
-          content: response.choices[0].message.content,
-        });
+        this.addOpenAiMessage(response);
       });
     return true;
   }
