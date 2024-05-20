@@ -117,6 +117,16 @@ export const routes: Routes = [
     children: seriesRoutes,
   },
   {
+    path: 'about',
+    loadComponent: () =>
+      import('./about/about.component').then(m => m.AboutComponent),
+  },
+  {
+    path: 'contact',
+    loadComponent: () =>
+      import('./contact/contact.component').then(m => m.ContactComponent),
+  },
+  {
     path: '',
     pathMatch: 'full',
     loadComponent: () =>
