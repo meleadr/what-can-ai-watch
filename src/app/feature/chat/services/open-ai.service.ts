@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import {
   OpenAiCompletion,
   OpenAiMessage,
+  OpenAiMessageContent,
   OpenAiModel,
 } from '../model/chat.model';
 
@@ -33,11 +34,14 @@ export class OpenAiService {
       .post<OpenAiCompletion>(this.apiUrl, body, { headers })
       .pipe(
         map(response => {
-          const lastMessage = JSON.parse(response.choices[0].message.content);
+          const messageContent: OpenAiMessageContent = JSON.parse(
+            response.choices[0].message.content
+          );
           return {
             role: response.choices[0].message.role,
-            content: lastMessage.text,
-            title: lastMessage.title,
+            content: messageContent.text,
+            title: messageContent.title,
+            isMovie: messageContent.isMovie,
           };
         })
       );
