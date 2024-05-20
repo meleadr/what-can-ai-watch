@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -15,7 +15,7 @@ export class OpenAiService {
   private apiUrl = 'https://api.openai.com/v1/chat/completions';
   private apiKey = environment.apiOpenAIKey;
 
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
   generateResponse(history: OpenAiMessage[]): Observable<OpenAiMessage> {
     const headers = new HttpHeaders({
