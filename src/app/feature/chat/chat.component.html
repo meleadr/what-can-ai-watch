@@ -4,7 +4,7 @@
     style="height: 87vh">
     <div class="message-container">
       @for (
-        message of manager.messagesOpenAi$ | async | filter: OpenAiRole.System;
+        message of manager.messagesOpenAi | async | filter: OpenAiRole.System;
         track message
       ) {
         <div #messageDiv>
@@ -20,6 +20,11 @@
               >: {{ message.content }}
             </p>
           </div>
+        </div>
+      }
+      @if (manager.movieProposition | async; as movieProposition) {
+        <div class="w-fit">
+          <app-small-card [movie]="movieProposition" />
         </div>
       }
     </div>
