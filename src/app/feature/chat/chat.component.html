@@ -13,12 +13,34 @@
             [ngClass]="
               message.role === OpenAiRole.User ? 'justify-content-end' : ''
             ">
-            <p>
-              <strong>{{
-                message.role === OpenAiRole.User ? 'Me' : 'Bot'
-              }}</strong
-              >: {{ message.content }}
-            </p>
+            <div class="flex align-items-center">
+              @if (message.role === OpenAiRole.Assistant) {
+                @if ((manager.isLoading$ | async) && message.isTyping) {
+                  <img
+                    src="assets/images/robot_reflechit.gif"
+                    alt="Robot"
+                    class="h-4rem mr-2" />
+                } @else {
+                  <img
+                    src="assets/images/robot_trouve.png"
+                    alt="Robot"
+                    class="h-4rem mr-2" />
+                }
+              }
+              @if ((manager.isLoading$ | async) && message.isTyping) {
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+              } @else {
+                <span>{{ message.content }}</span>
+              }
+              @if (message.role === OpenAiRole.User) {
+                <img
+                  src="assets/images/userNotFound.svg"
+                  alt="User"
+                  class="h-3rem ml-2" />
+              }
+            </div>
           </div>
         </div>
       }
