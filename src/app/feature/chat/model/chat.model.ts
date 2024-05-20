@@ -18,6 +18,7 @@ export interface OpenAiMessage {
   role: string;
   content: string;
   title?: string;
+  isMovie?: boolean;
 }
 
 export interface OpenAiMessageResponse {
@@ -28,6 +29,7 @@ export interface OpenAiMessageResponse {
 export interface OpenAiMessageContent {
   title: string;
   text: string;
+  isMovie: boolean;
 }
 
 export enum OpenAiRole {

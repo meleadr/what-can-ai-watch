@@ -5,7 +5,7 @@ import {
 import { SpokenLanguage } from '@app/shared/models/spoken-language.model';
 import { Genre } from '@app/shared/models/genre.model';
 
-export interface Series {
+export class Series {
   id: number;
   adult: boolean;
   backdrop_path: string;

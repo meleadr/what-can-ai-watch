@@ -5,6 +5,8 @@ import { OpenAiService } from '../services/open-ai.service';
 import { MOVIE_HELPER_PROMPT } from '@app/shared/constants/prompt.constant';
 import { Movie } from '@app/shared/models/movie.model';
 import { MovieService } from '@app/shared/services/movie.service';
+import { SeriesService } from '@app/shared/services/series.service';
+import { Series } from '@app/shared/models/series.model';
 
 @Injectable()
 export class ChatManager {
@@ -20,6 +22,9 @@ export class ChatManager {
     null
   );
 
+  public seriesProposition: BehaviorSubject<Series> =
+    new BehaviorSubject<Series>(null);
+
   private isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -27,7 +32,8 @@ export class ChatManager {
 
   constructor(
     private service: OpenAiService,
-    private tmdbService: MovieService
+    private movieService: MovieService,
+    private seriesService: SeriesService
   ) {}
 
   public addMessage(message: OpenAiMessage): boolean {
@@ -41,8 +47,20 @@ export class ChatManager {
         finalize(() => this.isLoading.next(false)),
         tap(response => this.addOpenAiMessage(response)),
         filter(response => response.title !== null),
-        switchMap(response => this.tmdbService.searchByQuery(response.title)),
-        tap(movie => this.movieProposition.next(movie))
+        switchMap(response => {
+          if (response.isMovie) {
+            return this.movieService.searchByQuery(response.title);
+          } else {
+            return this.seriesService.searchByQuery(response.title);
+          }
+        }),
+        tap(media => {
+          if (media instanceof Movie) {
+            this.movieProposition.next(media);
+          } else {
+            this.seriesProposition.next(media);
+          }
+        })
       )
       .subscribe();
     return true;

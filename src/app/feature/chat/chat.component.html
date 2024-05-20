@@ -22,9 +22,14 @@
           </div>
         </div>
       }
-      @if (manager.movieProposition | async; as movieProposition) {
+      @if (manager.movieProposition | async; as movie) {
         <div class="w-fit">
-          <app-small-card [movie]="movieProposition" />
+          <app-small-card-movie [movie]="movie" />
+        </div>
+      }
+      @if (manager.seriesProposition | async; as series) {
+        <div class="w-fit">
+          <app-small-card-series [series]="series" />
         </div>
       }
     </div>

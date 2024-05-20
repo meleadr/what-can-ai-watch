@@ -18,7 +18,10 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '@app/shared/pipes/filter.pipe';
 import { ImageModule } from 'primeng/image';
-import { SmallCardComponent } from '@app/feature/chat/components/small-card/small-card.component';
+import { SmallCardMovieComponent } from '@app/feature/chat/components/small-card-movie/small-card-movie.component';
+import { Movie } from '@app/shared/models/movie.model';
+import { Series } from '@app/shared/models/series.model';
+import { SmallCardSeriesComponent } from '@app/feature/chat/components/small-card-series/small-card-series.component';
 
 @Component({
   selector: 'app-chat',
@@ -32,7 +35,8 @@ import { SmallCardComponent } from '@app/feature/chat/components/small-card/smal
     FilterPipe,
     FormsModule,
     ImageModule,
-    SmallCardComponent,
+    SmallCardMovieComponent,
+    SmallCardSeriesComponent,
   ],
   styles: [
     `

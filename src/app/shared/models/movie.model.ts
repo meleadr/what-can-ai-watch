@@ -2,7 +2,7 @@ import { SpokenLanguage } from '@app/shared/models/spoken-language.model';
 import { ProductionCompany } from '@app/shared/models/production.model';
 import { Genre } from '@app/shared/models/genre.model';
 
-export interface Movie {
+export class Movie {
   id: number;
   adult: boolean;
   backdrop_path: string;
