@@ -26,7 +26,7 @@ export class OpenAiService {
 
     const body = {
       model: OpenAiModel.GPT4,
-      messages: [...history],
+      messages: [...history.filter(message => !message.isTyping)],
       response_format: { type: 'json_object' },
     };
 

@@ -19,6 +19,7 @@ export interface OpenAiMessage {
   content: string;
   title?: string;
   isMovie?: boolean;
+  isTyping?: boolean;
 }
 
 export interface OpenAiMessageResponse {

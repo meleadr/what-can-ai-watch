@@ -20,6 +20,7 @@ import { FilterPipe } from '@app/shared/pipes/filter.pipe';
 import { ImageModule } from 'primeng/image';
 import { SmallCardMovieComponent } from '@app/feature/chat/components/small-card-movie/small-card-movie.component';
 import { SmallCardSeriesComponent } from '@app/feature/chat/components/small-card-series/small-card-series.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-chat',
@@ -35,11 +36,47 @@ import { SmallCardSeriesComponent } from '@app/feature/chat/components/small-car
     ImageModule,
     SmallCardMovieComponent,
     SmallCardSeriesComponent,
+    ProgressSpinnerModule,
   ],
   styles: [
     `
       .message-container {
         overflow-y: auto;
+      }
+
+      .typing-dot {
+        float: left;
+        width: 8px;
+        height: 8px;
+        margin: 0 4px;
+        background: #8d8c91;
+        border-radius: 50%;
+        opacity: 0;
+        animation: loadingFade 1s infinite;
+      }
+
+      .typing-dot:nth-child(1) {
+        animation-delay: 0s;
+      }
+
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes loadingFade {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.8;
+        }
+        100% {
+          opacity: 0;
+        }
       }
     `,
   ],
@@ -53,6 +90,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   public manager = inject(ChatManager);
   public inputValue: string;
   protected readonly OpenAiRole = OpenAiRole;
+  started: boolean;
 
   ngOnInit(): void {
     console.log('ChatComponent');
@@ -117,5 +155,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (isAdded) {
       this.inputValue = '';
     }
+  }
+
+  startConversation(): void {
+    this.manager.addMessage({
+      content: 'Aide-moi',
+      role: OpenAiRole.User,
+    });
+    this.started = true;
   }
 }

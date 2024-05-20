@@ -40,11 +40,19 @@ export class ChatManager {
     if (!message.content || this.isLoading.value) return false;
     this.isLoading.next(true);
     this.addOpenAiMessage(message);
+    this.addOpenAiMessage({
+      content: '',
+      isTyping: true,
+      role: OpenAiRole.Assistant,
+    });
 
     this.service
       .generateResponse(this.messagesOpenAi.value)
       .pipe(
         finalize(() => this.isLoading.next(false)),
+        tap(() =>
+          this.messagesOpenAi.next([...this.messagesOpenAi.value.slice(0, -1)])
+        ),
         tap(response => this.addOpenAiMessage(response)),
         filter(response => response.title !== null),
         switchMap(response => {
