@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import {
   OpenAiCompletion,
   OpenAiMessage,
@@ -17,17 +17,29 @@ export class OpenAiService {
 
   constructor(private http: HttpClient) {}
 
-  generateResponse(history: OpenAiMessage[]): Observable<OpenAiCompletion> {
+  generateResponse(history: OpenAiMessage[]): Observable<OpenAiMessage> {
     const headers = new HttpHeaders({
       ContentType: 'application/json',
       Authorization: `Bearer ${this.apiKey}`,
     });
 
     const body = {
-      model: OpenAiModel.GPT3,
+      model: OpenAiModel.GPT4,
       messages: [...history],
+      response_format: { type: 'json_object' },
     };
 
-    return this.http.post<OpenAiCompletion>(this.apiUrl, body, { headers });
+    return this.http
+      .post<OpenAiCompletion>(this.apiUrl, body, { headers })
+      .pipe(
+        map(response => {
+          const lastMessage = JSON.parse(response.choices[0].message.content);
+          return {
+            role: response.choices[0].message.role,
+            content: lastMessage.text,
+            title: lastMessage.title,
+          };
+        })
+      );
   }
 }
