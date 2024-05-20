@@ -116,6 +116,6 @@ export class MovieService {
           query,
         },
       })
-      .pipe(map(response => response.results[0]));
+      .pipe(map(response => new Movie(response.results[0])));
   }
 }

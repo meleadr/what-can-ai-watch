@@ -19,8 +19,6 @@ import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '@app/shared/pipes/filter.pipe';
 import { ImageModule } from 'primeng/image';
 import { SmallCardMovieComponent } from '@app/feature/chat/components/small-card-movie/small-card-movie.component';
-import { Movie } from '@app/shared/models/movie.model';
-import { Series } from '@app/shared/models/series.model';
 import { SmallCardSeriesComponent } from '@app/feature/chat/components/small-card-series/small-card-series.component';
 
 @Component({
@@ -72,6 +70,24 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     //   release_date: '1994-09-23',
     //   title: 'Les Évadés',
     //   video: false,
+    //   vote_average: 8.705,
+    //   vote_count: 26178,
+    // });
+
+    // this.manager.seriesProposition.next({
+    //   origin_country: [],
+    //   adult: false,
+    //   backdrop_path: '/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg',
+    //   id: 278,
+    //   original_language: 'en',
+    //   genre_ids: [],
+    //   original_name: 'The Shawshank Redemption',
+    //   overview:
+    //     "En 1947, Andy Dufresne, un jeune banquier, est condamné à la prison à vie pour le meurtre de sa femme et de son amant. Ayant beau clamer son innocence, il est emprisonné à Shawshank, le pénitencier le plus sévère de l'État du Maine. Il y fait la rencontre de Red, un noir désabusé, détenu depuis vingt ans. Commence alors une grande histoire d'amitié entre les deux hommes…",
+    //   popularity: 162.204,
+    //   poster_path: '/t30GjttOdb5At1sYy8b3TOwFgWV.jpg',
+    //   first_air_date: '1994-09-23',
+    //   name: 'Les Évadés',
     //   vote_average: 8.705,
     //   vote_count: 26178,
     // });
