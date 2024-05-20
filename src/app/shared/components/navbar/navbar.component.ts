@@ -79,9 +79,11 @@ export class NavbarComponent implements OnInit {
       },
       {
         label: 'A propos',
+        routerLink: 'about',
       },
       {
         label: 'Contact',
+        routerLink: 'contact',
       },
     ];
   }
