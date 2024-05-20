@@ -90,6 +90,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   public manager = inject(ChatManager);
   public inputValue: string;
   protected readonly OpenAiRole = OpenAiRole;
+  started: boolean;
 
   ngOnInit(): void {
     console.log('ChatComponent');
@@ -154,5 +155,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (isAdded) {
       this.inputValue = '';
     }
+  }
+
+  startConversation(): void {
+    this.manager.addMessage({
+      content: 'Aide-moi',
+      role: OpenAiRole.User,
+    });
+    this.started = true;
   }
 }
