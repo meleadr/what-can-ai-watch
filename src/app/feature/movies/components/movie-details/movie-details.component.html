@@ -1,25 +1,21 @@
 @if (manager.selected$ | async; as movie) {
   <div
-    class="flex flex-wrap align-items-center justify-content-center p-5 bg-cover bg-center bg-no-repeat backdrop"
+    class="flex flex-wrap align-items-center justify-content-center p-5 bg-cover bg-center bg-no-repeat backdrop gap-5"
     [style.background-image]="
       'url(https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces' +
       movie.backdrop_path
     ">
-    <div class="overlay"></div>
-    <div class="z-3">
-      <p-image
-        class="mr-8"
-        [src]="
-          'https://media.themoviedb.org/t/p/w600_and_h900_bestv2' +
-          movie.poster_path
-        "
-        [alt]="movie.title"
-        [width]="'350'"
-        [preview]="true" />
-    </div>
+    <p-image
+      [src]="
+        'https://media.themoviedb.org/t/p/w600_and_h900_bestv2' +
+        movie.poster_path
+      "
+      [alt]="movie.title"
+      [preview]="true"
+      [imageClass]="'w-15rem sm:w-25rem'" />
 
     <!--  Informations  -->
-    <div class="w-6 pl-3">
+    <div class="pl-3 w-full sm:w-6">
       <h1 class="text-primary font-bold">{{ movie.title }}</h1>
 
       <!--   Vidéo   -->
@@ -35,7 +31,7 @@
       <p>{{ movie.release_date | date: 'dd-MM-yyyy' }}</p>
 
       <h3 class="font-bold">Notes</h3>
-      <p>{{ movie.vote_average }}</p>
+      <p>{{ movie.vote_average | number: '1.1-1' }} / 10</p>
 
       <h3 class="font-bold">Nombres de votes</h3>
       <p>{{ movie.vote_count }}</p>
