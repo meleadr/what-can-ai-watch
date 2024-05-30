@@ -1,16 +1,7 @@
-<p-menubar [model]="items" [style]="{ borderRadius: '0', display: 'flex' }">
+<p-menubar [model]="items" [style]="{ borderRadius: '0' }">
   <ng-template pTemplate="start">
     <a [routerLink]="['/']">
       <img src="assets/images/robot_trouve.png" alt="Logo" class="h-4rem" />
     </a>
   </ng-template>
-  <ng-template pTemplate="end">
-    <div class="flex items-center">
-      <p-inputGroup>
-        <input type="text" pInputText placeholder="Search" />
-        <button type="button" pButton icon="pi pi-search"></button>
-      </p-inputGroup>
-    </div>
-  </ng-template>
-  ></p-menubar
->
+</p-menubar>
