@@ -29,6 +29,7 @@ export class ChatManager {
     false
   );
   public readonly isLoading$ = this.isLoading.asObservable();
+  public hideTextBar = false;
 
   constructor(
     private service: OpenAiService,
@@ -45,7 +46,6 @@ export class ChatManager {
       isTyping: true,
       role: OpenAiRole.Assistant,
     });
-
     this.service
       .generateResponse(this.messagesOpenAi.value)
       .pipe(

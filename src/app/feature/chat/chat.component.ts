@@ -86,6 +86,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChildren('messageDiv') private messages!: QueryList<ElementRef>;
+  @ViewChildren('propositionDiv') private proposition!: QueryList<ElementRef>;
 
   public manager = inject(ChatManager);
   public inputValue: string;
@@ -137,9 +138,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   private scrollToBottom(): void {
     const lastMessage = this.messages.last;
+    const proposition = this.proposition.last;
 
     if (lastMessage) {
       lastMessage.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    if (proposition) {
+      proposition.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
@@ -163,5 +169,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       role: OpenAiRole.User,
     });
     this.started = true;
+  }
+
+  sendUserInterest(isInterest: boolean): void {
+    if (!isInterest) {
+      // Cache le message de proposition
+      this.manager.movieProposition.next(null);
+      this.manager.seriesProposition.next(null);
+
+      this.manager.addMessage({
+        content: `Je ne suis pas intéressé par celui la, peux tu m'en proposer un autre ?`,
+        role: OpenAiRole.User,
+      });
+    }
   }
 }
