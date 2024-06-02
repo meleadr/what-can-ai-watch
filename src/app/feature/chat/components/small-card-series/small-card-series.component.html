@@ -1,11 +1,10 @@
-<a
-  [routerLink]="['/series', series().id]"
-  style="text-decoration: none; color: inherit">
+<a style="text-decoration: none; color: inherit">
   <div
-    class="flex justify-content-around card border-2 border surface-border border-round surface-card pr-5"
+    class="flex border-2 surface-border border-round"
     style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 10px">
     <div class="flex justify-content-center">
       <img
+        class="border-round"
         [src]="
           'https://media.themoviedb.org/t/p/w600_and_h900_bestv2' +
           series().poster_path
@@ -13,18 +12,24 @@
         [alt]="series().name"
         [width]="'150'" />
     </div>
-    <div
-      class="flex flex-column justify-content-around ml-3"
-      style="padding: 10px">
+    <div class="flex flex-column justify-content-around p-3">
       <h3 class="text-primary">
         {{ series().name }}
       </h3>
+
       <p class="text-secondary">
-        {{ series().first_air_date }}
+        {{ series().first_air_date | date: 'dd-MM-yyyy' }}
       </p>
-      <p class="text-primary">
-        {{ series().vote_average }}
-      </p>
+
+      <a [routerLink]="['/series', series().id]" target="_blank">
+        <p-button
+          [label]="'Voir plus'"
+          [rounded]="true"
+          [style]="{ width: '100px' }"
+          [icon]="'pi pi-angle-right'"
+          [iconPos]="'right'"
+          [styleClass]="'p-button-rounded'" />
+      </a>
     </div>
   </div>
 </a>
