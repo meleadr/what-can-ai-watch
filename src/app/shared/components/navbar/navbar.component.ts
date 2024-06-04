@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {
-        label: 'What Can I Watch',
+        label: 'What Can AI Watch',
         routerLink: '/',
       },
       {

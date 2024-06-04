@@ -39,6 +39,7 @@ export class ChatManager {
 
   public addMessage(message: OpenAiMessage): boolean {
     if (!message.content || this.isLoading.value) return false;
+    this.hideTextBar = false;
     this.isLoading.next(true);
     this.addOpenAiMessage(message);
     this.addOpenAiMessage({
@@ -57,8 +58,10 @@ export class ChatManager {
         filter(response => response.title !== null),
         switchMap(response => {
           if (response.isMovie) {
+            this.hideTextBar = true;
             return this.movieService.searchByQuery(response.title);
           } else {
+            this.hideTextBar = true;
             return this.seriesService.searchByQuery(response.title);
           }
         }),
