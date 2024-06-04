@@ -57,22 +57,37 @@
           </div>
         </div>
       }
-      <div class="w-full flex justify-content-center">
+      <div
+        #propositionDiv
+        class="w-full flex flex-column align-items-center mb-5">
         @if (manager.seriesProposition | async; as series) {
           <app-small-card-series [series]="series" />
+          <div class="flex flex-wrap justify-content-center gap-5 mt-5">
+            <p-button
+              label="C'est parfait"
+              [routerLink]="['/series', series.id]" />
+            <p-button label="Pas intéressé" (click)="sendUserInterest(false)" />
+          </div>
         }
         @if (manager.movieProposition | async; as movieProposition) {
           <app-small-card-movie [movie]="movieProposition" />
+          <div class="flex flex-wrap justify-content-center gap-5 mt-5">
+            <p-button
+              label="C'est parfait"
+              [routerLink]="['/movie', movieProposition.id]" />
+            <p-button label="Pas intéressé" (click)="sendUserInterest(false)" />
+          </div>
         }
       </div>
     </div>
-    @if (started) {
+    <!--  Discussion bar  -->
+    @if (started && !manager.hideTextBar) {
       <div class="flex justify-content-center">
         <p-inputGroup class="w-30rem">
           <input
             type="text"
             pInputText
-            placeholder="Message AI assistant"
+            placeholder="Envoyer un message..."
             [(ngModel)]="inputValue"
             (keydown.enter)="sendMessage()" />
           <button
