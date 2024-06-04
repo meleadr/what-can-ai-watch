@@ -1,6 +1,6 @@
 <div class="p-4">
   <div
-    class="flex flex-column p-5 border-2 border-dashed surface-border border-round surface-card"
+    class="flex flex-column border-2 border-dashed surface-border border-round surface-card"
     [ngClass]="!started ? 'justify-content-center' : 'justify-content-between'"
     style="height: 85vh">
     @if (!started) {
@@ -14,90 +14,95 @@
           [rounded]="true"
           (click)="startConversation()" />
       </div>
-    }
-    <div class="message-container">
-      @for (
-        message of manager.messagesOpenAi | async | filter: OpenAiRole.System;
-        track message
-      ) {
-        <div #messageDiv>
-          <div
-            class="flex p-4"
-            [ngClass]="
-              message.role === OpenAiRole.User ? 'justify-content-end' : ''
-            ">
-            <div class="flex align-items-center">
-              @if (message.role === OpenAiRole.Assistant) {
-                @if ((manager.isLoading$ | async) && message.isTyping) {
-                  <img
-                    src="assets/images/robot_reflechit.gif"
-                    alt="Robot"
-                    class="h-4rem mr-2" />
-                } @else {
-                  <img
-                    src="assets/images/robot_trouve.png"
-                    alt="Robot"
-                    class="h-4rem mr-2" />
+    } @else {
+      <div class="message-container">
+        @for (
+          message of manager.messagesOpenAi | async | filter: OpenAiRole.System;
+          track message
+        ) {
+          <div #messageDiv>
+            <div
+              class="flex p-4"
+              [ngClass]="
+                message.role === OpenAiRole.User ? 'justify-content-end' : ''
+              ">
+              <div class="flex align-items-center">
+                @if (message.role === OpenAiRole.Assistant) {
+                  @if ((manager.isLoading$ | async) && message.isTyping) {
+                    <img
+                      src="assets/images/robot_reflechit.gif"
+                      alt="Robot"
+                      class="h-4rem mr-2" />
+                  } @else {
+                    <img
+                      src="assets/images/robot_trouve.png"
+                      alt="Robot"
+                      class="h-4rem mr-2" />
+                  }
                 }
-              }
-              @if ((manager.isLoading$ | async) && message.isTyping) {
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-              } @else {
-                <span>{{ message.content }}</span>
-              }
-              @if (message.role === OpenAiRole.User) {
-                <img
-                  src="assets/images/userNotFound.svg"
-                  alt="User"
-                  class="h-3rem ml-2" />
-              }
+                @if ((manager.isLoading$ | async) && message.isTyping) {
+                  <div class="typing-dot"></div>
+                  <div class="typing-dot"></div>
+                  <div class="typing-dot"></div>
+                } @else {
+                  <span>{{ message.content }}</span>
+                }
+                @if (message.role === OpenAiRole.User) {
+                  <img
+                    src="assets/images/userNotFound.svg"
+                    alt="User"
+                    class="h-3rem ml-2" />
+                }
+              </div>
             </div>
           </div>
+        }
+        <div
+          #propositionDiv
+          class="w-full flex flex-column align-items-center p-5 mb-5">
+          @if (manager.seriesProposition | async; as series) {
+            <app-small-card-series [series]="series" />
+            <div class="flex flex-wrap justify-content-center gap-5 mt-5">
+              <p-button
+                label="C'est parfait"
+                [routerLink]="['/series', series.id]" />
+              <p-button
+                label="Pas intéressé"
+                (click)="sendUserInterest(false)" />
+            </div>
+          }
+          @if (manager.movieProposition | async; as movieProposition) {
+            <app-small-card-movie [movie]="movieProposition" />
+            <div class="flex flex-wrap justify-content-center gap-5 mt-5">
+              <p-button
+                label="C'est parfait"
+                [routerLink]="['/movie', movieProposition.id]" />
+              <p-button
+                label="Pas intéressé"
+                (click)="sendUserInterest(false)" />
+            </div>
+          }
+        </div>
+      </div>
+      <!--  Discussion bar  -->
+      @if (started && !manager.hideTextBar) {
+        <div class="flex justify-content-center p-4">
+          <p-inputGroup class="w-30rem">
+            <input
+              type="text"
+              pInputText
+              placeholder="Envoyer un message..."
+              [(ngModel)]="inputValue"
+              (keydown.enter)="sendMessage()" />
+            <button
+              type="button"
+              pButton
+              [disabled]="!inputValue || (manager.isLoading$ | async)"
+              (click)="sendMessage()"
+              icon="pi pi-send"></button>
+          </p-inputGroup>
         </div>
       }
-      <div
-        #propositionDiv
-        class="w-full flex flex-column align-items-center mb-5">
-        @if (manager.seriesProposition | async; as series) {
-          <app-small-card-series [series]="series" />
-          <div class="flex flex-wrap justify-content-center gap-5 mt-5">
-            <p-button
-              label="C'est parfait"
-              [routerLink]="['/series', series.id]" />
-            <p-button label="Pas intéressé" (click)="sendUserInterest(false)" />
-          </div>
-        }
-        @if (manager.movieProposition | async; as movieProposition) {
-          <app-small-card-movie [movie]="movieProposition" />
-          <div class="flex flex-wrap justify-content-center gap-5 mt-5">
-            <p-button
-              label="C'est parfait"
-              [routerLink]="['/movie', movieProposition.id]" />
-            <p-button label="Pas intéressé" (click)="sendUserInterest(false)" />
-          </div>
-        }
-      </div>
-    </div>
-    <!--  Discussion bar  -->
-    @if (started && !manager.hideTextBar) {
-      <div class="flex justify-content-center">
-        <p-inputGroup class="w-30rem">
-          <input
-            type="text"
-            pInputText
-            placeholder="Envoyer un message..."
-            [(ngModel)]="inputValue"
-            (keydown.enter)="sendMessage()" />
-          <button
-            type="button"
-            pButton
-            [disabled]="!inputValue || (manager.isLoading$ | async)"
-            (click)="sendMessage()"
-            icon="pi pi-send"></button>
-        </p-inputGroup>
-      </div>
     }
   </div>
 </div>

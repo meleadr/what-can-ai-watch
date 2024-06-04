@@ -138,14 +138,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   private scrollToBottom(): void {
     const lastMessage = this.messages.last;
-    const proposition = this.proposition.last;
+    const lastProposition = this.proposition.last;
 
     if (lastMessage) {
       lastMessage.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
 
-    if (proposition) {
-      proposition.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    if (lastProposition) {
+      lastProposition.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
