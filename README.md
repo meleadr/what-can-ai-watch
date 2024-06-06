@@ -1,27 +1,37 @@
-# App
+# What Can AI Watch
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.1.
+## Explication de l'application
 
-## Development server
+**What Can AI Watch** est une plateforme de recommandation de films et de séries, conçue pour aider les utilisateurs à trouver le contenu qui correspond parfaitement à leurs envies. Grâce à l'intelligence artificielle, l'application engage une conversation avec l'utilisateur pour comprendre ses goûts et lui suggérer des films ou des séries adaptés.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Comment utiliser l'application
 
-## Code scaffolding
+Pour utiliser **What Can AI Watch**, suivez ces étapes simples :
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Rendez-vous sur le site web de l'application. Vous pouvez y accéder en cliquant [ici](https://what-can-ai-watch.com/).
+2. Cliquez sur l'onglet **"Chat AI"**.
+3. Sur la page de chat, cliquez sur le bouton **"Démarrer la discussion"** pour commencer à interagir avec l'IA.
+4. L'IA vous posera une série de questions pour cerner vos préférences en matière de films ou de séries.
+5. Une fois que l'IA a recueilli suffisamment d'informations, elle vous proposera une recommandation personnalisée.
 
-## Build
+## Technologies utilisées
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+L'application est développée en utilisant les technologies suivantes :
 
-## Running unit tests
+- **Angular** : Pour la structure et le développement du front-end.
+- **PrimeNG** : Pour l'interface utilisateur et les composants graphiques.
+- **RxJS** : Pour la gestion réactive des données.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## API utilisées
 
-## Running end-to-end tests
+Pour fournir des recommandations précises et actualisées, l'application utilise les API suivantes :
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- **The Movie Database (TMDb)** : Pour accéder à une vaste base de données de films et de séries.
+- **OpenAI** : Pour alimenter l'intelligence artificielle de l'application et gérer les conversations.
 
-## Further help
+## Auteurs
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+L'application **What Can AI Watch** a été développée par :
+
+- [Adriano Meledina](https://github.com/Meleadr)
+- [Alexandre Roosens](https://github.com/Foxenz)
